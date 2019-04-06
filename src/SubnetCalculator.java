@@ -23,8 +23,8 @@ public class SubnetCalculator {
         System.out.println("Network address: " + networkAddress(ipAddress.getIpAddress(), ipAddress.getMask()));
         System.out.println("Binary network address: " + addressToBinary(networkAddress(ipAddress.getIpAddress(), ipAddress.getMask())));
 
-        System.out.println("Class: " + checkAddressClass(networkAddress(ipAddress.getIpAddress(), ipAddress.getMask())));
-        if(isPrivate(networkAddress(ipAddress.getIpAddress(), ipAddress.getMask()))){
+        System.out.println("Class: " + IpAddress.getIpAddress());
+        if(isPrivate(IpAddress.getIpAddress())){
             System.out.println("Address is private");
         }
         else{
