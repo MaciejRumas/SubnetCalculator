@@ -10,9 +10,8 @@ public class SubnetCalculator {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter ip address: (a.b.c.d/mask)");
-        String adress = scanner.nextLine();
-
-        IpAddress ipAddress = new IpAddress(adress);
+        String address = scanner.nextLine();
+        IpAddress ipAddress = new IpAddress(address);
 
         System.out.println("Ip address: " + ipAddress.getIpAddress());
         System.out.println("Binary Ip address: " + addressToBinary(ipAddress.getIpAddress()));
@@ -23,13 +22,16 @@ public class SubnetCalculator {
         System.out.println("Network address: " + networkAddress(ipAddress.getIpAddress(), ipAddress.getMask()));
         System.out.println("Binary network address: " + addressToBinary(networkAddress(ipAddress.getIpAddress(), ipAddress.getMask())));
 
-        System.out.println("Class: " + IpAddress.getIpAddress());
+        System.out.println("Class: " + checkAddressClass(IpAddress.getIpAddress()));
         if(isPrivate(IpAddress.getIpAddress())){
             System.out.println("Address is private");
         }
         else{
             System.out.println("Address is public");
         }
+
+        //System.out.println("Broadcast address: " + broadcastAddress(networkAddress(ipAddress.getIpAddress(), ipAddress.getMask()),IpAddress.getMask()));
+        System.out.println(calculateBroadcastAddress(ipAddress.getIpAddress(),ipAddress.getMask()));
 
     }
 
@@ -150,6 +152,51 @@ public class SubnetCalculator {
         else{
             return false;
         }
+    }
+
+    private static String broadcastAddress(String networkAddress, int mask){
+        String broadcastAddress = "";
+        String[] addressParts = addressToBinary(networkAddress).split("\\.");
+        String[] maskParts = maskToBinary(mask).split("\\.");
+        for(int i=0;i<=3;i++){
+            int intIp = Integer.valueOf(addressParts[i]);
+            int intMask = Integer.valueOf(maskParts[i]);
+            System.out.println(intMask);
+            System.out.println(~intMask);
+
+            broadcastAddress += binaryToDecimal(intIp | (~intMask));
+            if(i<3){
+                broadcastAddress += ".";
+            }
+        }
+        return broadcastAddress;
+    }
+
+    public static int addressToInt(String addressTo){
+        int addressInt = 0;
+        String[] addressParts = addressTo.split("\\.");
+        for (int i = 3; i >= 0; i--) {
+            long ip = Long.parseLong(addressParts[3 - i]);
+            addressInt |= ip << (i * 8);
+        }
+        return addressInt;
+    }
+
+    public static String calculateBroadcastAddress(String addressTo, int mask){
+       int broadcast = (((addressToInt(addressTo) & addressToInt(maskToDecimal(maskToBinary(mask)))) | ~(addressToInt(maskToDecimal(maskToBinary(mask))))));
+        return intToAddress(broadcast);
+    }
+
+    public static String intToAddress(int addressTo){
+        StringBuilder addressIP = new StringBuilder(15);
+        for (int i = 0; i < 4; i++) {
+            addressIP.insert(0,(addressTo & 0xff));
+            if (i < 3) {
+                addressIP.insert(0,'.');
+            }
+            addressTo = addressTo >> 8;
+        }
+        return addressIP.toString();
     }
 
 }

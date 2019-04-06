@@ -4,8 +4,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class IpAddress {
-    private String ipAddress;
-    private int mask;
+    private static String ipAddress;
+    private static int mask;
 
 
     public IpAddress(String string) throws UnknownHostException, SocketException {
@@ -29,11 +29,11 @@ public class IpAddress {
         }
     }
 
-    public String getIpAddress() {
+    public  static String getIpAddress() {
         return ipAddress;
     }
 
-    public int getMask() {
+    public static int getMask() {
         return mask;
     }
 
