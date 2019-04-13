@@ -243,7 +243,7 @@ public class IpAddress {
         String[] ipParts = ipAddress.split("\\.");
         String[] fiParts = minHost().split("\\.");
         String[] laParts = maxHost().split("\\.");
-        if(Integer.valueOf(ipParts[3]) >= Integer.valueOf(fiParts[3]) && Integer.valueOf(ipParts[3]) <= Integer.valueOf(laParts[3])){
+        if(addressToInt(ipAddress) >= addressToInt(minHost()) && addressToInt(ipAddress) <= addressToInt(maxHost())){
             return true;
         }
         return false;
