@@ -1,13 +1,12 @@
-import java.io.File;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 
 public class SubnetCalculator {
 
-    public static void main(String[] args) throws UnknownHostException, SocketException, IOException{
+    public static void main(String[] args) throws UnknownHostException, SocketException {
 
 
         Scanner scanner = new Scanner(System.in);
@@ -20,31 +19,35 @@ public class SubnetCalculator {
         StringBuilder info = new StringBuilder();
 
         info.append("Ip address: " + ipAddress.getIpAddress() + "\n"
-        + "Binary Ip address: " + ipAddress.getBinaryIpAddress() + "\n"
-        + "Decimal mask: " + ipAddress.getMaskDecimal() + "\n"
-        + "Binary mask: " + ipAddress.getMaskBinary() + "\n"
+                + "Binary Ip address: " + ipAddress.getBinaryIpAddress() + "\n"
+                + "Decimal mask: " + ipAddress.getMaskDecimal() + "\n"
+                + "Binary mask: " + ipAddress.getMaskBinary() + "\n"
 
-        + "Network address: " + ipAddress.getNetworkAddress() + "\n"
-        + "Binary network address: " + ipAddress.getBinaryNetworkAddress() + "\n"
+                + "Network address: " + ipAddress.getNetworkAddress() + "\n"
+                + "Binary network address: " + ipAddress.getBinaryNetworkAddress() + "\n"
 
-        + "Class: " + ipAddress.checkAddressClass() + "\n"
-        + ipAddress.checkPrivacy()  + "\n"
+                + "Class: " + ipAddress.checkAddressClass() + "\n"
+                + ipAddress.checkPrivacy() + "\n"
 
-        + "Broadcast address: " + ipAddress.getBroadcastAddress() + "\n"
-        + "Binary broadcast address: " + ipAddress.getBinaryBroadcastAddress() + "\n"
+                + "Broadcast address: " + ipAddress.getBroadcastAddress() + "\n"
+                + "Binary broadcast address: " + ipAddress.getBinaryBroadcastAddress() + "\n"
 
-        + "First host address: " + ipAddress.minHost()  + "\n"
-        + "Binary first host address: " + ipAddress.binaryMinHost() + "\n"
+                + "First host address: " + ipAddress.minHost() + "\n"
+                + "Binary first host address: " + ipAddress.binaryMinHost() + "\n"
 
-        + "Last host address: " + ipAddress.maxHost() + "\n"
-        + "Binary last host address: " + ipAddress.binaryMaxHost() + "\n"
+                + "Last host address: " + ipAddress.maxHost() + "\n"
+                + "Binary last host address: " + ipAddress.binaryMaxHost() + "\n"
 
-        + "Maximal host amount: " + ipAddress.maxHostAmount() + "\n");
+                + "Maximal host amount: " + ipAddress.maxHostAmount() + "\n");
 
         System.out.println(info.toString());
-        SaveToFile.save("IpAddressInfo.txt", info.toString());
+        try {
+            SaveToFile.save("IpAddressInfo.txt", info.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        if(ipAddress.isHostAddress()) {
+        if (ipAddress.isHostAddress()) {
             boolean loop = true;
             System.out.print("Do you want to send ping request? (Y/N): ");
             while (loop) {
@@ -57,7 +60,7 @@ public class SubnetCalculator {
                             SaveToFile.save("PingRequest.txt", output);
                             System.exit(0);
                         } catch (IOException e) {
-                            System.err.println(e.getMessage());
+                            e.printStackTrace();
                         }
                         break;
                     }
