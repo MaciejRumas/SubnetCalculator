@@ -1,12 +1,23 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 
 public class PingRequest{
     public static String sendPingRequest(String address)throws IOException {
-        InetAddress inetAddress = InetAddress.getByName(address);
-
         String pingRequest = "Sending Ping Request to " + address + "\n";
-        pingRequest += inetAddress.isReachable(5000) ? "Host is reachable" : "Host is NOT reachable";
+        String command = "ping " + address;
+        Runtime runtime = Runtime.getRuntime();
+        Process process = runtime.exec(command);
+
+        InputStream stdout = process.getInputStream ();
+        BufferedReader reader = new BufferedReader (new InputStreamReader(stdout));
+        String line;
+        while ((line = reader.readLine ()) != null) {
+            pingRequest += line + "\n";
+        }
+
         return pingRequest + "\n";
     }
 }

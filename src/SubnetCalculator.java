@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.net.SocketException;
@@ -6,7 +7,7 @@ import java.util.Scanner;
 
 public class SubnetCalculator {
 
-    public static void main(String[] args) throws UnknownHostException, SocketException {
+    public static void main(String[] args) throws UnknownHostException, SocketException, IOException{
 
 
         Scanner scanner = new Scanner(System.in);
@@ -42,13 +43,6 @@ public class SubnetCalculator {
 
         System.out.println(info.toString());
 
-        try {
-            SaveToFile.save("Files/IpAddressInfo.txt", info.toString());
-        }catch (IOException e){
-            System.err.println(e.getMessage());
-        }
-
-
         if(ipAddress.isHostAddress()) {
             boolean loop = true;
             System.out.print("Do you want to send ping request? (Y/N): ");
@@ -57,7 +51,9 @@ public class SubnetCalculator {
                 switch (answer) {
                     case "Y": {
                         try {
-                            System.out.println(PingRequest.sendPingRequest(ipAddress.getIpAddress()));
+                            String output = PingRequest.sendPingRequest(ipAddress.getIpAddress());
+                            System.out.println(output);
+                            info.append(output);
                             System.exit(0);
                         } catch (IOException e) {
                             System.err.println(e.getMessage());
@@ -74,6 +70,12 @@ public class SubnetCalculator {
                     }
                 }
             }
+        }
+
+        try {
+            SaveToFile.save("Files/IpAddressInfo.txt", info.toString());
+        }catch (IOException e){
+            System.err.println(e.getMessage());
         }
     }
 }
