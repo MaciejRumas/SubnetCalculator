@@ -10,10 +10,14 @@ public class SubnetCalculator {
 
 
         Scanner scanner = new Scanner(System.in);
+        String address = "";
+        //System.out.println("Enter ip address: (a.b.c.d/mask)");
+        //address = scanner.nextLine();
+        if(args.length > 0)
+        address = args[0];
 
-        //String info = "";
-        System.out.println("Enter ip address: (a.b.c.d/mask)");
-        String address = scanner.nextLine();
+
+        System.out.println(address);
         IpAddress ipAddress = new IpAddress(address);
 
         StringBuilder info = new StringBuilder();
