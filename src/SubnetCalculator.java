@@ -42,6 +42,7 @@ public class SubnetCalculator {
         + "Maximal host amount: " + ipAddress.maxHostAmount() + "\n");
 
         System.out.println(info.toString());
+        SaveToFile.save("IpAddressInfo.txt", info.toString());
 
         if(ipAddress.isHostAddress()) {
             boolean loop = true;
@@ -53,7 +54,7 @@ public class SubnetCalculator {
                         try {
                             String output = PingRequest.sendPingRequest(ipAddress.getIpAddress());
                             System.out.println(output);
-                            info.append(output);
+                            SaveToFile.save("PingRequest.txt", output);
                             System.exit(0);
                         } catch (IOException e) {
                             System.err.println(e.getMessage());
@@ -72,11 +73,6 @@ public class SubnetCalculator {
             }
         }
 
-        try {
-            SaveToFile.save("Files/IpAddressInfo.txt", info.toString());
-        }catch (IOException e){
-            System.err.println(e.getMessage());
-        }
     }
 }
 

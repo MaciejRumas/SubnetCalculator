@@ -1,0 +1,15 @@
+Ip address: 192.168.56.1
+Binary Ip address: 11000000.10101000.00111000.00000001
+Decimal mask: 255.255.255.0
+Binary mask: 11111111.11111111.11111111.00000000
+Network address: 192.168.56.0
+Binary network address: 11000000.10101000.00111000.00000000
+Class: C
+Address is private
+Broadcast address: 192.168.56.255
+Binary broadcast address: 11000000.10101000.00111000.11111111
+First host address: 192.168.56.1
+Binary first host address: 11000000.10101000.00111000.00000001
+Last host address: 192.168.56.254
+Binary last host address: 11000000.10101000.00111000.11111110
+Maximal host amount: 254
